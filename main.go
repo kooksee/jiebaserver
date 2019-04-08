@@ -1,12 +1,29 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/yanyiwu/gojieba"
+	"os"
+	"path"
 )
 
 func main() {
-	x := gojieba.NewJieba()
+	cur, err := os.Getwd()
+	if err != nil {
+		panic(err.Error())
+	}
+
+	DICT_DIR := path.Join(cur, "dict")
+	DICT_PATH := path.Join(DICT_DIR, "jieba.dict.utf8")
+	HMM_PATH := path.Join(DICT_DIR, "hmm_model.utf8")
+	USER_DICT_PATH := path.Join(DICT_DIR, "user.dict.utf8")
+	IDF_PATH := path.Join(DICT_DIR, "idf.utf8")
+	STOP_WORDS_PATH := path.Join(DICT_DIR, "stop_words.utf8")
+
+	fmt.Println(DICT_PATH, HMM_PATH, USER_DICT_PATH, IDF_PATH, STOP_WORDS_PATH)
+
+	x := gojieba.NewJieba(DICT_PATH, HMM_PATH, USER_DICT_PATH, IDF_PATH, STOP_WORDS_PATH)
 	defer x.Free()
 
 	r := gin.Default()
