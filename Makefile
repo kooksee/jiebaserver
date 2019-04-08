@@ -61,4 +61,4 @@ wrk:
 	@wrk -t10 -c100 -d30s -T30s --script=tests/post.lua --latency http://localhost:8080/cut
 
 dr:
-	docker run --rm -p 8080:8080 registry.cn-hangzhou.aliyuncs.com/ybase/jiebaserver:v0.0.3
+	docker run --rm -p 8080:8080 registry.cn-hangzhou.aliyuncs.com/ybase/jiebaserver:v0.0.4
