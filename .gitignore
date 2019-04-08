@@ -18,3 +18,4 @@ vendor
 main
 .env
 kdata
+k8s.*

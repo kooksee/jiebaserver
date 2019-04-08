@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	x := gojieba.NewJieba()
+	x := gojieba.NewJieba("dict")
 	defer x.Free()
 
 	r := gin.Default()
