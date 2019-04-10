@@ -1,0 +1,39 @@
+Running 10s test @ http://localhost:8080/cut
+  20 threads and 100 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   508.48ms  273.04ms   1.80s    69.67%
+    Req/Sec    11.04      7.07    49.00     71.83%
+  Latency Distribution
+     50%  481.48ms
+     75%  661.54ms
+     90%  871.36ms
+     99%    1.28s 
+  1934 requests in 10.08s, 105.11MB read
+Requests/sec:    191.86
+Transfer/sec:     10.43MB
+Running 5s test @ http://localhost:8080/cut
+  20 threads and 100 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   521.22ms  277.45ms   1.68s    67.52%
+    Req/Sec    11.41      8.00    50.00     74.77%
+  Latency Distribution
+     50%  488.97ms
+     75%  677.59ms
+     90%  902.79ms
+     99%    1.21s 
+  907 requests in 5.10s, 49.30MB read
+Requests/sec:    177.74
+Transfer/sec:      9.66MB
+Running 1s test @ http://localhost:8080/cut
+  20 threads and 100 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   490.91ms  250.56ms   1.08s    62.93%
+    Req/Sec    10.10      8.20    38.00     65.75%
+  Latency Distribution
+     50%  467.67ms
+     75%  632.74ms
+     90%  891.36ms
+     99%    1.02s 
+  116 requests in 1.10s, 6.35MB read
+Requests/sec:    105.36
+Transfer/sec:      5.77MB

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/yanyiwu/gojieba"
 	"os"
@@ -21,8 +20,6 @@ func main() {
 	IDF_PATH := path.Join(DICT_DIR, "idf.utf8")
 	STOP_WORDS_PATH := path.Join(DICT_DIR, "stop_words.utf8")
 
-	fmt.Println(DICT_PATH, HMM_PATH, USER_DICT_PATH, IDF_PATH, STOP_WORDS_PATH)
-
 	x := gojieba.NewJieba(DICT_PATH, HMM_PATH, USER_DICT_PATH, IDF_PATH, STOP_WORDS_PATH)
 	defer x.Free()
 
@@ -30,7 +27,7 @@ func main() {
 	r.POST("/cut", func(c *gin.Context) {
 		dt, err := c.GetRawData()
 		if err != nil {
-			c.JSON(400, err.Error())
+			c.String(400, err.Error())
 			return
 		}
 

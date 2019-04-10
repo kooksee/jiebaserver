@@ -58,7 +58,9 @@ t:
 docker:_docker_build _docker_push
 
 wrk:
-	@wrk -t10 -c100 -d30s -T30s --script=tests/post.lua --latency http://localhost:8080/cut
+	@wrk -t20 -c100 -d10s -T30s --script=tests/post.lua --latency http://localhost:8080/cut > tests/test
+	@wrk -t20 -c100 -d5s -T30s --script=tests/post.lua --latency http://localhost:8080/cut >> tests/test
+	@wrk -t20 -c100 -d1s -T30s --script=tests/post.lua --latency http://localhost:8080/cut >> tests/test
 
 dr:
-	docker run --rm -p 8080:8080 registry.cn-hangzhou.aliyuncs.com/ybase/jiebaserver:v0.0.4
+	docker run --rm -p 8080:8080 registry.cn-hangzhou.aliyuncs.com/ybase/jiebaserver:v0.0.6
