@@ -25,6 +25,9 @@ func main() {
 
 	r := gin.Default()
 	r.POST("/cut", func(c *gin.Context) {
+		// 版本管理每一个API
+		// c.GetHeader("x-version")
+
 		dt, err := c.GetRawData()
 		if err != nil {
 			c.String(400, err.Error())
