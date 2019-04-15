@@ -1,10 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/yanyiwu/gojieba"
 	"os"
 	"path"
+
+	"github.com/deckarep/golang-set"
 )
 
 func main() {
@@ -37,7 +40,74 @@ func main() {
 		c.JSON(200, x.Cut(string(dt), true))
 	})
 
-	if err := r.Run(); err != nil {
+	r.POST("/jaccard", func(c *gin.Context) {
+		// 版本管理每一个API
+		// c.GetHeader("x-version")
+
+		dt, err := c.GetRawData()
+		if err != nil {
+			c.String(400, err.Error())
+			return
+		}
+
+		var _rd []string
+		if err := json.Unmarshal(dt, &_rd); err != nil {
+			c.String(400, err.Error())
+			return
+		}
+		_rd0 := mapset.NewSet()
+		for _, _i := range x.Cut(string(_rd[0]), true) {
+			_rd0.Add(_i)
+		}
+
+		_rd1 := mapset.NewSet()
+		for _, _i := range x.Cut(string(_rd[1]), true) {
+			_rd1.Add(_i)
+		}
+
+		c.JSON(200, gin.H{
+			"code": "ok",
+			"data": len(_rd0.Intersect(_rd1).ToSlice()) / len(_rd0.Union(_rd1).ToSlice()),
+		})
+	})
+
+	r.POST("/jaccard_less", func(c *gin.Context) {
+		// 版本管理每一个API
+		// c.GetHeader("x-version")
+
+		dt, err := c.GetRawData()
+		if err != nil {
+			c.String(400, err.Error())
+			return
+		}
+
+		var _rd []string
+		if err := json.Unmarshal(dt, &_rd); err != nil {
+			c.String(400, err.Error())
+			return
+		}
+		_rd0 := mapset.NewSet()
+		for _, _i := range x.Cut(string(_rd[0]), true) {
+			_rd0.Add(_i)
+		}
+
+		_rd1 := mapset.NewSet()
+		for _, _i := range x.Cut(string(_rd[1]), true) {
+			_rd1.Add(_i)
+		}
+
+		_l := len(_rd0.ToSlice())
+		if _l < len(_rd1.ToSlice()) {
+			_l = len(_rd1.ToSlice())
+		}
+
+		c.JSON(200, gin.H{
+			"code": "ok",
+			"data": len(_rd0.Intersect(_rd1).ToSlice()) / _l,
+		})
+	})
+
+	if err := r.Run(":8080"); err != nil {
 		panic(err.Error())
 	}
 }

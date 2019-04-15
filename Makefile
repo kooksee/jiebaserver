@@ -20,7 +20,6 @@ ifeq ($(shell git tag | tail -n 1), $(shell cat version/version | head -n 1))
 		exit "项目版本没有变动"
 endif
 
-	@echo "$(_Version)" > "version/version"
 	@echo "package version" > $(_VersionFile)
 	@echo "const Version = "\"$(_Version)\" >> $(_VersionFile)
 	@echo "const BuildVersion = "\"$(_BuildVersion)\" >> $(_VersionFile)
@@ -41,6 +40,7 @@ _docker_build:_build_linux
 _docker_push:
 	@echo "docker push"
 	sudo docker push $(_ImageVersionName)
+	@echo "$(_Version)" > "version/version"
 
 version:_version
 	@echo $(_Version)
