@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/yanyiwu/gojieba"
+	"net/http"
 	"os"
 	"path"
 
@@ -27,6 +28,10 @@ func main() {
 	defer x.Free()
 
 	r := gin.Default()
+	r.GET("/", func(c *gin.Context) {
+		c.String(http.StatusOK, "ok")
+	})
+
 	r.POST("/cut", func(c *gin.Context) {
 		// 版本管理每一个API
 		// c.GetHeader("x-version")
@@ -55,6 +60,11 @@ func main() {
 			c.String(400, err.Error())
 			return
 		}
+		if len(_rd) != 2 {
+			c.String(400, "列表长度不是2")
+			return
+		}
+
 		_rd0 := mapset.NewSet()
 		for _, _i := range x.Cut(string(_rd[0]), true) {
 			_rd0.Add(_i)
@@ -67,7 +77,7 @@ func main() {
 
 		c.JSON(200, gin.H{
 			"code": "ok",
-			"data": len(_rd0.Intersect(_rd1).ToSlice()) / len(_rd0.Union(_rd1).ToSlice()),
+			"data": float64(len(_rd0.Intersect(_rd1).ToSlice())) / float64(len(_rd0.Union(_rd1).ToSlice())),
 		})
 	})
 
@@ -86,6 +96,12 @@ func main() {
 			c.String(400, err.Error())
 			return
 		}
+
+		if len(_rd) != 2 {
+			c.String(400, "列表长度不是2")
+			return
+		}
+
 		_rd0 := mapset.NewSet()
 		for _, _i := range x.Cut(string(_rd[0]), true) {
 			_rd0.Add(_i)
@@ -103,7 +119,7 @@ func main() {
 
 		c.JSON(200, gin.H{
 			"code": "ok",
-			"data": len(_rd0.Intersect(_rd1).ToSlice()) / _l,
+			"data": float64(len(_rd0.Intersect(_rd1).ToSlice())) / float64(_l),
 		})
 	})
 
