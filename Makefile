@@ -1,7 +1,8 @@
 .PHONY: version build build_linux docker_login docker_build docker_push_dev docker_push_pro
 .PHONY: rm_stop
 
-_Version = $(shell git tag | tail -n 1)
+#_Version = $(shell git tag | tail -n 1)
+_Version = v0.0.10
 _VersionFile = version/version.go
 _VersionCheckFile = version/version.md
 _CommitVersion = $(shell git rev-parse --short=8 HEAD)
@@ -15,7 +16,7 @@ _ImageVersionName = $(_ImagesPrefix)$(_ImageName):$(_Version)
 
 _version:
 
-ifeq ($(shell git tag | tail -n 1), $(shell cat version/version | head -n 1))
+ifeq ($(_Version), $(shell cat version/version | head -n 1))
 		@git tag | tee
 		exit "项目版本没有变动"
 endif
@@ -63,4 +64,4 @@ wrk:
 	@wrk -t20 -c100 -d1s -T30s --script=tests/post.lua --latency http://localhost:8080/cut >> tests/test
 
 dr:
-	docker run --rm -p 8080:8080 registry.cn-hangzhou.aliyuncs.com/ybase/jiebaserver:v0.0.6
+	docker run --rm -p 8080:8080 registry.cn-hangzhou.aliyuncs.com/ybase/jiebaserver:v0.0.10
