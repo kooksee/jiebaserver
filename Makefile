@@ -1,8 +1,7 @@
 .PHONY: version build build_linux docker_login docker_build docker_push_dev docker_push_pro
 .PHONY: rm_stop
 
-#_Version = $(shell git tag | tail -n 1)
-_Version = v0.0.10
+_Version = $(shell git tag --sort=committerdate | tee | tail -n 1)
 _VersionFile = version/version.go
 _VersionCheckFile = version/version.md
 _CommitVersion = $(shell git rev-parse --short=8 HEAD)
