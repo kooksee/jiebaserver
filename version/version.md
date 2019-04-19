@@ -16,3 +16,9 @@
 ## Version: v0.0.6
 	1. BuildVersion: 2019-04-08 19:39:51
 	2. CommitVersion: a1b7ff0c
+## Version: v0.0.9
+	1. BuildVersion: 2019-04-18 17:41:19
+	2. CommitVersion: 56c2a852
+## Version: v0.0.9
+	1. BuildVersion: 2019-04-18 17:42:50
+	2. CommitVersion: 56c2a852

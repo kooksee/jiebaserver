@@ -1,6 +1,7 @@
 package readability
 
 import (
+	"fmt"
 	nurl "net/url"
 	"strings"
 	"testing"
@@ -11,18 +12,25 @@ import (
 
 func BenchmarkReadability(b *testing.B) {
 	urls := []string{
-		"https://www.nytimes.com/2018/01/21/technology/inside-amazon-go-a-store-of-the-future.html",
-		"http://www.dwmkerr.com/the-death-of-microservice-madness-in-2018/",
-		"https://www.eurekalert.org/pub_releases/2018-01/uoe-stt011118.php",
-		"http://www.slate.com/articles/arts/books/2018/01/the_reviewer_s_fallacy_when_critics_aren_t_critical_enough.html",
-		"https://www.theatlantic.com/business/archive/2018/01/german-board-games-catan/550826/?single_page=true",
-		"http://www.weeklystandard.com/the-anti-bamboozler/article/2011032",
-		"http://www.inquiriesjournal.com/articles/1657/the-impact-of-listening-to-music-on-cognitive-performance",
+		"http://www.yongchang.gov.cn/Item/11507.aspx",
+		"http://www.baidu.com/link?url=bQLDt5r-VYz3-_s57DWkzasJx1n2nLXAkameq0AB7U4x3BUbHUTCelAyjxFOeJXM",
+		//"https://www.nytimes.com/2018/01/21/technology/inside-amazon-go-a-store-of-the-future.html",
+		//"http://www.dwmkerr.com/the-death-of-microservice-madness-in-2018/",
+		//"https://www.eurekalert.org/pub_releases/2018-01/uoe-stt011118.php",
+		//"http://www.slate.com/articles/arts/books/2018/01/the_reviewer_s_fallacy_when_critics_aren_t_critical_enough.html",
+		//"https://www.theatlantic.com/business/archive/2018/01/german-board-games-catan/550826/?single_page=true",
+		//"http://www.weeklystandard.com/the-anti-bamboozler/article/2011032",
+		//"http://www.inquiriesjournal.com/articles/1657/the-impact-of-listening-to-music-on-cognitive-performance",
 	}
 
 	for _, url := range urls {
+		_t := time.Now().Unix()
 		parsedURL, _ := nurl.Parse(url)
-		FromURL(parsedURL, 5*time.Second)
+		art, err := FromURL(parsedURL, 5*time.Second)
+		if err != nil {
+			panic(err.Error())
+		}
+		fmt.Println(time.Now().Unix()-_t, url, art)
 	}
 }
 
